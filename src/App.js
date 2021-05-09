@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Admin from './Components/Admin';
 import AdminMain from './Components/AdminMain';
 import Registration from './Components/Registration';
-// const Api_key =process.env.REACT_APP_WEATHER_API_KEY
 function App() {
   return (
     <div className="App">

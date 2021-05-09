@@ -70,7 +70,7 @@ class Map extends Component {
                         }
                     </div>
                     <div className="col-sm-4">
-                        <h3>Distance :{this.state.distanceCoverd}</h3>
+                        <h3>Distance : {((this.state.distanceCoverd)*1000/1000).toFixed(2)} Meters</h3>
                     </div>
                 </div>
             </div>
