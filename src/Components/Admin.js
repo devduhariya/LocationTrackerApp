@@ -27,7 +27,7 @@ export default class Admin extends Component {
     }
     checkLogin() {
         // console.log('in chk login');
-        axios.get('http://localhost:4000/session', { withCredentials: true }).then(res => {
+        axios.get('https://locationtrackappback.herokuapp.com/session', { withCredentials: true }).then(res => {
             // console.log('res: session in adminmain', res);
             if (res.data.session && res.data.session.userId) {
                 this.setState({
@@ -50,7 +50,7 @@ export default class Admin extends Component {
         });
     }
     getUsers() {
-        axios.get('http://localhost:4000/users', { withCredentials: true }).then(res => {
+        axios.get('https://locationtrackappback.herokuapp.com/users', { withCredentials: true }).then(res => {
             // console.log("users", res);
             const usrs = this.groupBy(res.data, "userId");
             // console.log("usrs: group by: ", usrs);
@@ -82,7 +82,7 @@ export default class Admin extends Component {
         return result;
     }
     getUser(id) {
-        axios.get('http://localhost:4000/user/' + id, { withCredentials: true }).then(res => {
+        axios.get('https://locationtrackappback.herokuapp.com/user/' + id, { withCredentials: true }).then(res => {
             this.setState({
                 oneUser: res.data,
             });

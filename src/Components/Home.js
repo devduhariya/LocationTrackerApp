@@ -40,18 +40,18 @@ class Home extends Component {
         };
         localStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
         if (id === null) {
-            axios.post('http://localhost:4000/location', (request), { withCredentials: true }).then(res => {
+            axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
                 localStorage.setItem("id", res.data.id);
             });
         } else {
-            axios.patch('http://localhost:4000/location/' + id, request, { withCredentials: true }).then(res => {
+            axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, request, { withCredentials: true }).then(res => {
             });
         }
     }
     logout() {
         const lastLatLong = (localStorage.getItem("lastLatLong") && JSON.parse(localStorage.getItem("lastLatLong"))) || {};
         const id = localStorage.getItem("id");
-        axios.patch('http://localhost:4000/location/' + id, lastLatLong, { withCredentials: true }).then(res => {
+        axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, lastLatLong, { withCredentials: true }).then(res => {
             localStorage.removeItem("id");
             localStorage.removeItem("lastLatLong")
         }).catch((error) => {

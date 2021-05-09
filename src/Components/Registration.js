@@ -28,7 +28,7 @@ class Registration extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        axios.post('http://localhost:4000/signup', req,{ withCredentials: true }).then(res => {
+        axios.post('https://locationtrackappback.herokuapp.com/signup', req,{ withCredentials: true }).then(res => {
             // console.log('res:', res);
             // alert('succes');
             this.props.history.push('/admin/dashboard');

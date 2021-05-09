@@ -11,7 +11,7 @@ class AdminMain extends Component {
     }
 
     checkLogin() {
-        axios.get('http://localhost:4000/session', { withCredentials: true }).then(res => {
+        axios.get('https://locationtrackappback.herokuapp.com/session', { withCredentials: true }).then(res => {
             console.log('res: session', res);
             if (res.data.session && res.data.session.userEmail) {
                 this.setState({
@@ -27,7 +27,7 @@ class AdminMain extends Component {
         console.log('islogged in', this.state.isloggedin);
     }
     logout() {
-        axios.get('http://localhost:4000/logout', { withCredentials: true }).then((res) => {
+        axios.get('https://locationtrackappback.herokuapp.com/logout', { withCredentials: true }).then((res) => {
             localStorage.removeItem("id");
             window.location.pathname = '/'
         }).catch((error) => {
