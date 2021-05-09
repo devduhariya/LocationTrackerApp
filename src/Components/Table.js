@@ -1,46 +1,84 @@
 import React from 'react'
-import '../App.css'
+import { Link } from 'react-router-dom'
+import '../App.css';
+let currentUsr = [];
 const Table = (props) => {
     // console.log('props',props)
     const userData = props.users
-    // console.log('userData', userData)
+    // console.log('userData in table props', userData)
 
-   const  onTrigger = (event) => {
-        props.handleChange(event);
+    const onTrigger = (event) => {
+        props.handleChange(event[0]);
+        // console.log();
         // event.preventDefault();
-        console.log('evevevevevnt',event)
+        // console.log('evevevevevnt', event);
+        currentUsr = event;
     }
+    const updateMap = (index) => {
+        props.handleChange(currentUsr[index]);
+    }
+
     return (
         <div className="container">
-            <table className="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Start Location</th>
-                        <th>Start Date</th>
-                        <th>Start Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {(userData && userData.length > 0) ? userData.map((data, index) => {
-                        const date = new Date(data.startDate);
-                        const dt = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                        const time = date.toLocaleTimeString();
-                        return (
-                            <tr key={index}>
-                                <td className=""><button className="btn btn-info" onClick={(ev)=>onTrigger(data._id)}>{data.userId}</button></td>
-                                <td>
-                                    <div>lat:{data.coordinates[0] && data.coordinates[0].lat}</div>
-                                    <div>lng:{data.coordinates[0] && data.coordinates[0].lng}</div>
-                                </td>
-                                <td>{dt}</td>
-                                <td>{time}</td>
+            <div className='row mt-4'>
+                <div className='col-sm'>
+                    <Link to={'/admin/addUser'} className=" btn btn-info btn-sm">Add User</Link>
+                    <hr />
+                    <table className="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Users</th>
+                                <th>Action</th>
                             </tr>
-                        )
-                    }) : <tr><td colSpan="5">Loading...</td></tr>}
-                </tbody>
-            </table>
-
+                        </thead>
+                        <tbody>
+                            {(userData && userData.length > 0) ? userData.map((data, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{data[0].userId}</td>
+                                        <td><button className="btn btn-info" onClick={(ev) => onTrigger(data)}>View</button></td>
+                                    </tr>
+                                )
+                            }) : <tr><td colSpan="5">Loading...</td></tr>}
+                        </tbody>
+                    </table>
+                    <hr />
+                    <table className="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Start Date</th>
+                                <th>Start Time</th>
+                                <th>End Date</th>
+                                <th>End Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentUsr.length > 0 ? currentUsr.map((d, i) => {
+                                    let date = new Date(d.startDate);
+                                    let sdt = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                                    let stime = date.toLocaleTimeString();
+                                    let edate = new Date(d.endDate);
+                                    let edt = edate.getDate() + '/' + (edate.getMonth() + 1) + '/' + edate.getFullYear();
+                                    let etime = edate.toLocaleTimeString();
+                                    return (
+                                        <tr>
+                                            <td>{d.userId}</td>
+                                            <td>{sdt}</td>
+                                            <td>{stime}</td>
+                                            <td>{edt}</td>
+                                            <td>{etime}</td>
+                                            <td><button className="btn btn-info" onClick={(ev) => updateMap(i)}>Get Map</button></td>
+                                        </tr>
+                                    );
+                                }) : 'Loading data....'
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     )
 }

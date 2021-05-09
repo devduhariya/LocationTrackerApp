@@ -8,33 +8,35 @@ class login extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            errorMessage: ''
         };
         this.login = this.login.bind(this);
         this.updateUsername = this.updateUsername.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
+        this.checkSession = this.checkSession.bind(this);
     }
     login() {
-        // console.log('username: ', this.state.username);
-        // console.log('password: ', this.state.password);
         const request = {
             email: this.state.username,
             password: this.state.password
         };
         axios.post('http://localhost:4000/login', (request), { withCredentials: true }).then(res => {
-            // alert('Logged in')
-            console.log(res);
-            // if(this.props.Admin){
-            //     window.location.pathname = '/';
-            // }else{
-
-                window.location.pathname = '/home';
-            // }
+            this.checkSession();
         }).catch(error => {
-            // console.log('Error: ', error);
             this.setState({
-                errorMessage: 'Invalid! email OR password'
+                errorMessage: 'Invalid! email OR password',
             });
+            // alert(this.state.errorMessage)
+        });
+    }
+    checkSession() {
+        axios.get('http://localhost:4000/session', { withCredentials: true }).then(res => {
+            if (res.data.session.role === 'admin') {
+                this.props.history.push('/admin/dashboard');
+            } else {
+                this.props.history.push('/home');
+            }
         });
     }
     updateUsername(evt) {
@@ -50,7 +52,7 @@ class login extends Component {
     render() {
         return (
             <div className="container">
-                <h2>Login page</h2>
+                <h2 className="mt-5 text-center">Login page</h2>
                 <div className="row my-2 mt-5">
                     <div className="col-sm">
                         <input type="text" value={this.state.username} onChange={this.updateUsername} className="form-control" placeholder="Email Id" />
@@ -63,7 +65,7 @@ class login extends Component {
                 </div>
                 <div className="row my-2">
                     <div className="col text-right">
-                        <button className="btn btn-sm btn-success" onClick={this.login}>Log In</button>
+                        <button className="btn btn-success" onClick={this.login}>Log In</button>
                     </div>
                 </div>
             </div>

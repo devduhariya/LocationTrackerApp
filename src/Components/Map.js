@@ -14,35 +14,42 @@ class Map extends Component {
         this.state = {
             directions: null,
             options: '',
-            // totalTime: null,
-            // totalDistance: null,
             destinations: [],
             origins: [],
             waypts: [],
-            distanceCoverd:null,
-            duration:null
+            distanceCoverd: null,
+            duration: null
 
         }
         this.renderMapRoute = this.renderMapRoute.bind(this);
         this.updateMap = this.updateMap.bind(this);
+        // this.setZeroHoursMinuteSeconds = this.setZeroHoursMinuteSeconds.bind(this);
         // console.log("users data in map", this.props)
     }
     componentDidMount() {
         this.updateMap();
     }
     componentDidUpdate(prevProps) {
-        // console.log("pre props: ", prevProps.userData);
+        // console.log("pre props: ", prevProps);
         // console.log(prevProps.userData !== this.props.userData);
         if (prevProps.userData !== this.props.userData) {
             this.updateMap();
         }
     }
+    // setZeroHoursMinuteSeconds(date) {
+    //     const dt = new Date(date);
+    //     dt.setHours(0);
+    //     dt.setMinutes(0);
+    //     dt.setSeconds(0);
+    //     return dt;
+    // }
     updateMap() {
         const { userData } = this.props;
-        // console.log("users data in map update map: ", userData);
+        console.log("users data in map update map: ", userData);
         this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
         let desinations = [];
         let waypoints = [];
+       
         let origin = { lat: userData.coordinates[0].lat, lng: userData.coordinates[0].lng };
         for (let i = 0; i < userData.coordinates.length; i++) {
             desinations.push({ lat: userData.coordinates[i].lat, lng: userData.coordinates[i].lng });
@@ -77,20 +84,17 @@ class Map extends Component {
                     this.setState({
                         directions: result
                     });
-                    // console.log("result: ", result);
-                } 
+                    console.log("result: ", result);
+                }
                 // else {
                 //     console.error(`error fetching directions ${result}`);
                 // }
                 var route = result.routes[0];
                 // for (var i = 0; i < route.legs.length; i++) {
-                    this.setState({
-                        distanceCoverd : route.legs[0].distance.text,
-                        duration : route.legs[0].duration.text
-                       
-                    })
-                     
-                // }
+                this.setState({
+                    distanceCoverd: route.legs[0].distance.text,
+                    duration: route.legs[0].duration.text
+                })
             }
         );
     }
@@ -98,10 +102,10 @@ class Map extends Component {
         const GoogleMapExample = withGoogleMap(props => (
             <GoogleMap
                 defaultCenter={{
-                    lat: 29.9134,
-                    lng: 73.8874
+                    lat: 20.5937,
+                    lng: 78.9629
                 }}
-                defaultZoom={8}
+                defaultZoom={14}
             >
 
                 {this.state.directions ? <DirectionsRenderer
@@ -114,17 +118,22 @@ class Map extends Component {
 
         return (
             <div className="container">
-
-                {
-                    this.state.destinations.length > 0 ? (
-                        <GoogleMapExample
-                            containerElement={<div style={{ height: `100vh`, width: "100vw" }} />}
-                            mapElement={<div style={{ height: `100%` }} />}
-                        />
-                    ) : 'Loading ...'
-                }
-                <h1>{this.state.distanceCoverd}</h1>
-                <h1>{this.state.duration}</h1>
+                <div className="row">
+                    <div className="col-sm-8">
+                        {
+                            this.state.destinations.length > 0 ? (
+                                <GoogleMapExample
+                                    containerElement={<div style={{ height: `600px`, width: "600px" }} />}
+                                    mapElement={<div style={{ height: `100%` }} />}
+                                />
+                            ) : 'Loading ...'
+                        }
+                    </div>
+                    <div className="col-sm-4">
+                        <h3>Distance :{this.state.distanceCoverd}</h3>
+                        <h3>Time :{this.state.duration}</h3>
+                    </div>
+                </div>
             </div>
         );
 
@@ -132,3 +141,6 @@ class Map extends Component {
 
 }
 export default Map;
+
+
+// c = [];
