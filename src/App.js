@@ -6,22 +6,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Admin from './Components/Admin';
 import AdminMain from './Components/AdminMain';
 import Registration from './Components/Registration';
-
+// const Api_key =process.env.REACT_APP_WEATHER_API_KEY
 function App() {
   return (
     <div className="App">
       <Router>
       <AdminMain />
-
         <div>
           <Switch>
             <Route exact path='/' component={Login} />
             <Route exact path='/admin/addUser' component={Registration} />
-            {/* <Route exact path='/home' component={Home} /> */}
             <Route exact path='/home' component={Home} />
             <Route exact path='/admin/dashboard' component={Admin} />
-            {/* <Route exact path='/admin' component={AdminMain} /> */}
-            {/* <Route exact path='/userPage' component={UserPage} /> */}
           </Switch>
         </div>
       </Router>

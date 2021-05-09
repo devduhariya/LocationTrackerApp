@@ -5,7 +5,6 @@ import axios from 'axios'
 class login extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             username: '',
             password: '',

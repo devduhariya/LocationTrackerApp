@@ -13,3 +13,8 @@ input[type=email]{
     border: none;
     background: #f1f1f1;
 }
+.errorMessage{
+  display: flex;
+  align-items: center;
+justify-content: center;
+}

@@ -3,21 +3,14 @@ import { Link } from 'react-router-dom'
 import '../App.css';
 let currentUsr = [];
 const Table = (props) => {
-    // console.log('props',props)
     const userData = props.users
-    // console.log('userData in table props', userData)
-
     const onTrigger = (event) => {
         props.handleChange(event[0]);
-        // console.log();
-        // event.preventDefault();
-        // console.log('evevevevevnt', event);
         currentUsr = event;
     }
     const updateMap = (index) => {
         props.handleChange(currentUsr[index]);
     }
-
     return (
         <div className="container">
             <div className='row mt-4'>
