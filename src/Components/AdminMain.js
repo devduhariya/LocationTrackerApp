@@ -48,6 +48,9 @@ class AdminMain extends Component {
                             alt="Location tracker"
                             height="40" />
                         <a className="navbar-brand" href="/">Location App</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ml-auto">
 
@@ -56,22 +59,22 @@ class AdminMain extends Component {
                                     this.state.isloggedin ? (
                                         <>
                                             <li className="nav-item ml-3" >
-                                                <button className="nav-link btn-info btn"
+                                                <button className="nav-link btn-info btn my-2 my-sm-0"
                                                     onClick={() => { window.location.pathname = '/admin/dashboard' }} >Admin </button>
                                             </li>
                                             <li className="nav-item ml-3" >
-                                                <button className="nav-link btn-info btn"
+                                                <button className="nav-link btn-info btn my-2 my-sm-0"
                                                     onClick={() => { window.location.pathname = '/home' }} >Home </button>
                                             </li>
                                             <li className="nav-item ml-3" >
-                                                <button className="nav-link btn-danger btn"
+                                                <button className="nav-link btn-danger btn my-2 my-sm-0"
                                                     onClick={this.logout} > Logout </button>
                                             </li>
                                         </>
 
                                     ) :
-                                        <li className="nav-item ml-3" >
-                                            <button className="nav-link btn-primary btn"
+                                        <li className="nav-item" >
+                                            <button className="btn-primary btn my-2 my-lg-0"
                                                 onClick={() => { window.location.pathname = '/' }} >Log in </button>
                                         </li>
                                 }
