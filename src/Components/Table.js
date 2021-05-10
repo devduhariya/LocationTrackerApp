@@ -32,7 +32,7 @@ const Table = (props) => {
                                         <td><button className="btn btn-info" onClick={(ev) => onTrigger(data)}>View</button></td>
                                     </tr>
                                 )
-                            }) : <tr colSpan="5">Loading...</tr>}
+                            }) :'Fetching data'}
                         </tbody>
                     </table>
                     <hr />
