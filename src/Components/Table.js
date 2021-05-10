@@ -32,7 +32,7 @@ const Table = (props) => {
                                         <td><button className="btn btn-info" onClick={(ev) => onTrigger(data)}>View</button></td>
                                     </tr>
                                 )
-                            }) :<tr><td colSpan='2'>'Fetching data'</td></tr>}
+                            }) :<tr><td colSpan='2'>Fetching data</td></tr>}
                         </tbody>
                     </table>
                     <hr />
@@ -66,7 +66,7 @@ const Table = (props) => {
                                             <td><button className="btn btn-info" onClick={(ev) => updateMap(i)}>Get Map</button></td>
                                         </tr>
                                     );
-                                }) : 'Loading data....'
+                                }) : <tr><td colSpan='6'>Loading data....</td></tr>
                             }
                         </tbody>
                     </table>
