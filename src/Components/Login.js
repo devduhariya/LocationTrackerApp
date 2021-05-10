@@ -20,7 +20,7 @@ class login extends Component {
             email: this.state.username,
             password: this.state.password
         };
-        axios.post('https://cryptic-atoll-97983.herokuapp.com/login', (request), { withCredentials: true }).then(res => {
+        axios.post('https://locationtrackappback.herokuapp.com/login', (request), { withCredentials: true }).then(res => {
             this.checkSession();
         }).catch(error => {
             this.setState({
@@ -30,7 +30,7 @@ class login extends Component {
         });
     }
     checkSession() {
-        axios.get('https://cryptic-atoll-97983.herokuapp.com/session', { withCredentials: true }).then(res => {
+        axios.get('https://locationtrackappback.herokuapp.com/session', { withCredentials: true }).then(res => {
             if (res.data.session.role === 'admin') {
                 this.props.history.push('/admin/dashboard');
             } else {
