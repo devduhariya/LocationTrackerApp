@@ -49,7 +49,7 @@ class Map extends Component {
     render() {
         const GoogleMapExample = withGoogleMap(props => (
             <GoogleMap
-                defaultZoom={8}
+                defaultZoom={10}
                 defaultCenter={this.state.defaultCenter}
             >
                 <Polyline path={this.state.waypts} options={{ strokeColor: "#FF0000 " }} />

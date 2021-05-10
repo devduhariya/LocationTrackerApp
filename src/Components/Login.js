@@ -13,7 +13,7 @@ class login extends Component {
         this.login = this.login.bind(this);
         this.updateUsername = this.updateUsername.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
-        this.checkSession = this.checkSession.bind(this);
+        // this.checkSession = this.checkSession.bind(this);
     }
     login() {
         const request = {
@@ -21,7 +21,8 @@ class login extends Component {
             password: this.state.password
         };
         axios.post('https://locationtrackappback.herokuapp.com/login', (request), { withCredentials: true }).then(res => {
-            this.checkSession();
+            // this.checkSession();
+            this.props.history.push('/home');
         }).catch(error => {
             this.setState({
                 errorMessage: 'Invalid! email OR password',
@@ -29,15 +30,15 @@ class login extends Component {
             // alert(this.state.errorMessage)
         });
     }
-    checkSession() {
-        axios.get('https://locationtrackappback.herokuapp.com/session', { withCredentials: true }).then(res => {
-            if (res.data.session.role === 'admin') {
-                this.props.history.push('/admin/dashboard');
-            } else {
-                this.props.history.push('/home');
-            }
-        });
-    }
+    // checkSession() {
+    //     axios.get('https://locationtrackappback.herokuapp.com/session', { withCredentials: true }).then(res => {
+    //         if (res.data.session.role === 'admin') {
+    //             this.props.history.push('/admin/dashboard');
+    //         } else {
+    //             this.props.history.push('/home');
+    //         }
+    //     });
+    // }
     updateUsername(evt) {
         this.setState({
             username: evt.target.value
