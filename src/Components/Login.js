@@ -23,8 +23,8 @@ class login extends Component {
         axios.post('https://locationtrackappback.herokuapp.com/login', (request), { withCredentials: true }).then(res => {
             // this.checkSession();
             this.props.history.push('/home');
-            // window.location.reload();
-            this.props.history.reload();
+            window.location.reload(false);
+            // this.props.history.reload();
         }).catch(error => {
             this.setState({
                 errorMessage: 'Invalid! email OR password',
