@@ -24,6 +24,7 @@ class login extends Component {
             // this.checkSession();
             this.props.history.push('/home');
             // window.location.reload();
+            this.props.history.reload();
         }).catch(error => {
             this.setState({
                 errorMessage: 'Invalid! email OR password',
