@@ -20,7 +20,6 @@ class Home extends Component {
     getLocation() {
 
         if (navigator.geolocation) {
-
             navigator.geolocation.watchPosition(this.getcoordinates);
 
         } else {
@@ -30,20 +29,35 @@ class Home extends Component {
     getcoordinates(position) {
         this.saveLocation(position.coords.latitude, position.coords.longitude);
     }
+
+    saveLocationOO(lat, lng) {
+        const request = {
+            lat: lat,
+            lng: lng
+        };
+       
+        axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
+            // window.localStorage.setItem("id", res.data.id);
+            window.sessionStorage.setItem("id", res.data.id);
+            console.log('start', res);
+            alert('Tracking started')
+        });
+        
+    }
     saveLocation(lat, lng) {
         const request = {
             lat: lat,
             lng: lng
         };
-        const id = window.localStorage.getItem("id");
+        const id = window.sessionStorage.getItem("id");
         const lastLatLng = {
             lat: lat,
             lng: lng
         };
-        window.localStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
+        window.sessionStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
         if (id === null || undefined) {
             axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
-                window.localStorage.setItem("id", res.data.id);
+                window.sessionStorage.setItem("id", res.data.id);
                 console.log('start', res);
                 alert('Tracking started')
             });
@@ -54,11 +68,11 @@ class Home extends Component {
         }
     }
     logout() {
-        const lastLatLong = (window.localStorage.getItem("lastLatLong") && JSON.parse(window.localStorage.getItem("lastLatLong"))) || {};
-        const id = window.localStorage.getItem("id");
+        const lastLatLong = (window.sessionStorage.getItem("lastLatLong") && JSON.parse(window.sessionStorage.getItem("lastLatLong"))) || {};
+        const id = window.sessionStorage.getItem("id");
         axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, lastLatLong, { withCredentials: true }).then(res => {
-            window.localStorage.removeItem("id");
-            window.localStorage.removeItem("lastLatLong")
+            window.sessionStorage.removeItem("id");
+            window.sessionStorage.removeItem("lastLatLong")
             alert('Tracking ended');
         }).catch((error) => {
             alert(error);
