@@ -21,12 +21,16 @@ class Home extends Component {
 
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(this.getcoordinates);
+            
         } else {
             alert('location not supported by this browser');
         }
     }
     getcoordinates(position) {
-        this.saveLocation(position.coords.latitude, position.coords.longitude);
+        setTimeout(() => {
+            this.saveLocation(position.coords.latitude, position.coords.longitude);
+        }, 10000);
+        
     }
     saveLocation(lat, lng) {
         const request = {
@@ -42,9 +46,11 @@ class Home extends Component {
         if (id === null) {
             axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
                 localStorage.setItem("id", res.data.id);
+                alert('Tracking started')
             });
         } else {
             axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, request, { withCredentials: true }).then(res => {
+                
             });
         }
     }
@@ -54,8 +60,9 @@ class Home extends Component {
         axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, lastLatLong, { withCredentials: true }).then(res => {
             localStorage.removeItem("id");
             localStorage.removeItem("lastLatLong")
+            alert('Tracking ended');
         }).catch((error) => {
-            // alert(error);
+            alert(error);
         })
 
     }
