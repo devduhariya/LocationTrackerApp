@@ -20,17 +20,20 @@ class Home extends Component {
     getLocation() {
 
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(this.getcoordinates);
-            
+            setTimeout(() => {
+
+                navigator.geolocation.watchPosition(this.getcoordinates);
+            }, 10000);
+
         } else {
             alert('location not supported by this browser');
         }
     }
     getcoordinates(position) {
-        setTimeout(() => {
-            this.saveLocation(position.coords.latitude, position.coords.longitude);
-        }, 10000);
-        
+
+        this.saveLocation(position.coords.latitude, position.coords.longitude);
+
+
     }
     saveLocation(lat, lng) {
         const request = {
@@ -50,7 +53,7 @@ class Home extends Component {
             });
         } else {
             axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, request, { withCredentials: true }).then(res => {
-                
+
             });
         }
     }
