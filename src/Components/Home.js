@@ -20,10 +20,8 @@ class Home extends Component {
     getLocation() {
 
         if (navigator.geolocation) {
-            setTimeout(() => {
 
-                navigator.geolocation.watchPosition(this.getcoordinates);
-            }, 10000);
+            navigator.geolocation.watchPosition(this.getcoordinates);
 
         } else {
             alert('location not supported by this browser');
@@ -46,9 +44,10 @@ class Home extends Component {
             lng: lng
         };
         localStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
-        if (id === null) {
+        if (id === null || undefined) {
             axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
                 localStorage.setItem("id", res.data.id);
+                console.log('start',res);
                 alert('Tracking started')
             });
         } else {
