@@ -28,26 +28,23 @@ class Home extends Component {
         }
     }
     getcoordinates(position) {
-
         this.saveLocation(position.coords.latitude, position.coords.longitude);
-
-
     }
     saveLocation(lat, lng) {
         const request = {
             lat: lat,
             lng: lng
         };
-        const id = localStorage.getItem("id");
+        const id = window.localStorage.getItem("id");
         const lastLatLng = {
             lat: lat,
             lng: lng
         };
-        localStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
+        window.localStorage.setItem("lastLatLong", JSON.stringify(lastLatLng));
         if (id === null || undefined) {
             axios.post('https://locationtrackappback.herokuapp.com/location', (request), { withCredentials: true }).then(res => {
-                localStorage.setItem("id", res.data.id);
-                console.log('start',res);
+                window.localStorage.setItem("id", res.data.id);
+                console.log('start', res);
                 alert('Tracking started')
             });
         } else {
@@ -57,11 +54,11 @@ class Home extends Component {
         }
     }
     logout() {
-        const lastLatLong = (localStorage.getItem("lastLatLong") && JSON.parse(localStorage.getItem("lastLatLong"))) || {};
-        const id = localStorage.getItem("id");
+        const lastLatLong = (window.localStorage.getItem("lastLatLong") && JSON.parse(window.localStorage.getItem("lastLatLong"))) || {};
+        const id = window.localStorage.getItem("id");
         axios.patch('https://locationtrackappback.herokuapp.com/location/' + id, lastLatLong, { withCredentials: true }).then(res => {
-            localStorage.removeItem("id");
-            localStorage.removeItem("lastLatLong")
+            window.localStorage.removeItem("id");
+            window.localStorage.removeItem("lastLatLong")
             alert('Tracking ended');
         }).catch((error) => {
             alert(error);
