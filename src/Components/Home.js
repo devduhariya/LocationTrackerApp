@@ -17,10 +17,13 @@ class Home extends Component {
         this.saveLocation = this.saveLocation.bind(this)
         this.logout = this.logout.bind(this)
     }
+    errorCallback (error) {
+        console.log(error)
+    }
     getLocation() {
 
-        if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(this.getcoordinates);
+        if (navigator && navigator.geolocation) {
+            navigator.geolocation.watchPosition(this.getcoordinates,this.errorCallback, { enableHighAccuracy:true,maximumAge: 3000 });
 
         } else {
             alert('location not supported by this browser');
@@ -29,7 +32,6 @@ class Home extends Component {
     getcoordinates(position) {
         this.saveLocation(position.coords.latitude, position.coords.longitude);
     }
-
     saveLocationOO(lat, lng) {
         const request = {
             lat: lat,
@@ -41,8 +43,7 @@ class Home extends Component {
             window.sessionStorage.setItem("id", res.data.id);
             console.log('start', res);
             alert('Tracking started')
-        });
-        
+        });  
     }
     saveLocation(lat, lng) {
         const request = {
@@ -77,9 +78,7 @@ class Home extends Component {
         }).catch((error) => {
             alert(error);
         })
-
     }
-
     render() {
         return (
             <div className="container">
